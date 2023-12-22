@@ -1,9 +1,9 @@
 import db from '../db.js'
 
 export default {
-    buscarTodos: () => {
+    getProdutos: () => {
         return new Promise((accept, reject) => {
-            db.query('SELECT * FROM carros', (error, results) => {
+            db.query('SELECT * FROM products', (error, results) => {
                 if (error) {
                     reject(error)
                     return
@@ -12,9 +12,9 @@ export default {
             })
         })
     },
-    buscarUm: (codigo) => {
+    getProduto: (codigo) => {
         return new Promise((accept, reject) => {
-            db.query(`SELECT * FROM carros WHERE codigo=${codigo}`, (error, results) => {
+            db.query(`SELECT * FROM products WHERE codigo=${codigo}`, (error, results) => {
                 if (error) {
                     reject(error)
                     return
@@ -23,9 +23,15 @@ export default {
             })
         })
     },
-    inserir: (placa, modelo) => {
+    postProduto: (produto,
+        validade,
+        codigo,
+        precoDeCompra,
+        precoDeVenda,
+        dataDaCompra) => {
         return new Promise((accept, reject) => {
-            db.query(`INSERT INTO carros (modelo,placa) VALUES (?,?)`, [modelo, placa], (error, results) => {
+            db.query(`INSERT INTO products (produto,validade,codigo,precoDeCompra,precoDeVenda,dataDaCompra) VALUES (?,?,?,?,?,?)`, 
+            [produto,validade,codigo,precoDeCompra,precoDeVenda,dataDaCompra], (error, results) => {
                 if (error) {
                     reject(error)
                     return
@@ -34,10 +40,12 @@ export default {
             })
         })
     },
-    alterar: (codigo,placa, modelo) => {
+    updateProduto: (produto,validade,codigo,precoDeCompra,precoDeVenda,dataDaCompra) => {
         return new Promise((accept, reject) => {
-            db.query(`UPDATE carros SET modelo=?,placa=? WHERE codigo=?`, [modelo, placa,codigo], (error, results) => {
+            db.query(`UPDATE products SET produto=?,validade=?,precoDeCompra=?,precoDeVenda=?,dataDaCompra=? WHERE codigo=?`,
+             [produto,validade,precoDeCompra,precoDeVenda,dataDaCompra,codigo], (error, results) => {
                 if (error) {
+                    
                     reject(error)
                     return
                 }
@@ -45,9 +53,9 @@ export default {
             })
         })
     },
-    delete: (codigo) => {
+    deleteProduto: (codigo) => {
         return new Promise((accept, reject) => {
-            db.query(`DELETE FROM carros WHERE codigo=?`, [codigo], (error, results) => {
+            db.query(`DELETE FROM products WHERE codigo=?`, [codigo], (error, results) => {
                 if (error) {
                     reject(error)
                     return

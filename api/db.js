@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import mysql from 'mysql'
 
-dotenv.config({path:'C:/Users/Matheus/Documents/Project/CadastroCarro/api/variaveis.env'})
+dotenv.config({path:'C:/Users/Matheus/Documents/Project/ControleDeEstoque/api/variaveis.env'})
 
 const connection=mysql.createConnection({
     host:process.env.DB_HOST,
