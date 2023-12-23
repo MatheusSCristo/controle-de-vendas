@@ -5,7 +5,7 @@ export default {
         return new Promise((accept, reject) => {
             db.query('SELECT * FROM clientes', (error, results) => {
                 if (error) {
-                    reject(error)
+                    console.log(error)
                     return
                 }
                 accept(results)
@@ -16,7 +16,7 @@ export default {
         return new Promise((accept, reject) => {
             db.query(`SELECT * FROM clientes WHERE cpf=${cpf}`, (error, results) => {
                 if (error) {
-                    reject(error)
+                    console.log(error)
                     return
                 }
                 accept(results)
@@ -27,7 +27,7 @@ export default {
         return new Promise((accept, reject) => {
             db.query(`INSERT INTO clientes (nome,sobrenome,empresa,localizacao,cpf) VALUES (?,?,?,?,?)`, [nome,sobrenome,empresa, localizacao,cpf], (error, results) => {
                 if (error) {
-                    reject(error)
+                    console.log(error)
                     return
                 }
                 accept(results.insertCodigo)
@@ -38,7 +38,7 @@ export default {
         return new Promise((accept, reject) => {
             db.query(`UPDATE clientes SET nome=?,sobrenome=?,empresa=?,localizacao=? WHERE cpf=?`, [nome,sobrenome,empresa, localizacao,cpf], (error, results) => {
                 if (error) {
-                    reject(error)
+                    console.log(error)
                     return
                 }
                 accept(results)
@@ -49,7 +49,7 @@ export default {
         return new Promise((accept, reject) => {
             db.query(`DELETE FROM clientes WHERE cpf=?`, [cpf], (error, results) => {
                 if (error) {
-                    reject(error)
+                    console.log(error)
                     return
                 }
                 accept(results)
