@@ -70,7 +70,7 @@ const Clientes = () => {
     <div className='grow bg-white m-4 rounded shadow-2xl relative'>
       {isActive.editar && <EditarClientes isActive={isActive} setIsActive={setIsActive} editCliente={editCliente} />}
       {isActive.adicionar && <AddClientes isActive={isActive} setIsActive={setIsActive} />}
-      <div className='flex justify-between items-baseline h-[10%] border-b-2 border-grey m-20 mb-0'>
+      <div className='flex justify-between items-baseline h-16 border-b-2 border-grey m-20 mb-0'>
         <h1 className='text-4xl font-medium '>Clientes</h1>
         <button className='bg-gradient-to-r from-blue-500 to-cyan-500 text-2xl text-white rounded font-normal p-2 hover:scale-[1.1]' onClick={handleOnClickAddCliente}>Adicionar cliente</button>
       </div>

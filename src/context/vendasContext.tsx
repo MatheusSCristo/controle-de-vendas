@@ -15,8 +15,7 @@ type VendasContextDataT = {
 function VendasProvider({ children }: { children: ReactNode }) {
     const [vendas, setVendas] = useState<SalesT[]>(() => {
         const localVendas = localStorage.getItem('vendas');
-        return localVendas ? JSON.parse(localVendas) : [] 
-    })
+        return localVendas ? JSON.parse(localVendas) : []} ) 
     useEffect(()=>{
         localStorage.setItem('vendas',JSON.stringify(vendas))
     },[vendas])

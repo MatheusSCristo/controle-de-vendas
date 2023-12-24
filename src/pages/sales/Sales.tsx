@@ -56,32 +56,26 @@ const Sales = () => {
 
 
   useEffect(() => {
-    // if (localStorage.getItem('vendas'))
-    //   setSales(() => {
-    //     const localVendas = localStorage.getItem('vendas');
-    //     return localVendas ? JSON.parse(localVendas) : []
-    //   })
-    // else {
-    //   getSales()
-    // }
     getSales()
   }, [])
 
-  const reorganizeSalesStatus = (data:SalesT[]) => {
+  const reorganizeSalesStatus = (data: SalesT[]) => {
+    const organize = data
     if (data.length > 0) {
-      const organize = data
-      organize.sort((a, b) => {
-        if (a.status === 'cancelado' && b.status !== 'cancelado') {
-          return 1;
-        } else if (a.status !== 'cancelado' && b.status === 'cancelado') {
-          return -1;
-        } else {
-          return 0;
-        }
-      })
-     setSales(organize)
-     setVendas(organize)
+      if (organize.length>0) {
+        organize.sort((a, b) => {
+          if (a.status === 'cancelado' && b.status !== 'cancelado') {
+            return 1;
+          } else if (a.status !== 'cancelado' && b.status === 'cancelado') {
+            return -1;
+          } else {
+            return 0;
+          }
+        })
+      }
     }
+      setSales(organize)
+      setVendas(organize)
   }
 
 
@@ -89,7 +83,7 @@ const Sales = () => {
 
     <div className='grow bg-white m-4 rounded shadow-2xl relative'>
       {isActive.adicionar && <AddSales isActive={isActive} setIsActive={setIsActive} getSales={getSales} />}
-      <div className='flex justify-between items-baseline h-[10%] border-b-2 border-grey m-20 mb-0'>
+      <div className='flex justify-between items-baseline h-16 border-b-2 border-grey m-20 mb-0'>
         <h1 className='text-4xl font-medium '>Vendas</h1>
         <button className='bg-gradient-to-r from-blue-500 to-cyan-500 text-2xl text-white rounded font-normal p-2 hover:scale-[1.1]' onClick={handleOnClickAddVendas}>Cadastrar venda</button>
       </div>

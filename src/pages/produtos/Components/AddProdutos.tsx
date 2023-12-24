@@ -12,13 +12,14 @@ type AddProdutosParamsT = {
         adicionar: boolean;
         editar: boolean;
     }>>
+    getProdutos:()=>void
 }
 
-const AddProdutos = ({ isActive, setIsActive }: AddProdutosParamsT) => {
+const AddProdutos = ({ isActive, setIsActive,getProdutos }: AddProdutosParamsT) => {
 
     type addProdutosSchemaT = z.infer<typeof addProdutoSchema>
     const addProdutoSchema = z.object({
-        produto: z.string().min(3, "O nome do cliente precisa ter no mínimo 3 caracteres"),
+        produto: z.string().min(3, "O nome do produto precisa ter no mínimo 3 caracteres"),
         precoDeCompra: z
             .string()
             .min(1, 'É preciso informar o preço de compra do produto')
@@ -64,6 +65,7 @@ const AddProdutos = ({ isActive, setIsActive }: AddProdutosParamsT) => {
             .then((res) => res.json())
             .catch((error) => console.log(error))
         setIsActive({ ...isActive, adicionar: false })
+        setTimeout(()=>getProdutos(),1000)
     }
 
 
@@ -74,7 +76,7 @@ const AddProdutos = ({ isActive, setIsActive }: AddProdutosParamsT) => {
     return (
         <div className='absolute w-full h-full flex justify-center items-center bg-gray-500/20'>
             <div className='bg-white w-2/5  rounded-2xl relative flex flex-col items-center p-4 '>
-                <h1 className='text-2xl mt-2 mb-2'>Adicionar cliente</h1>
+                <h1 className='text-2xl mt-2 mb-2'>Adicionar produto</h1>
                 <span className='absolute top-2 right-4 text-2xl cursor-pointer hover:scale-[1.25]' onClick={handleOnClickClose}>X</span>
                 <form className='flex flex-col justify-center w-2/5 gap-1' onSubmit={handleSubmit(handleAddProduto)}>
 

@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from "zod"
-import { ProdutoContexto } from '../../../context/produtosContext'
+import { ProdutosContext } from '../../../context/produtosContext'
 import { ClienteContexto } from '../../../context/clienteContext'
 
 type AddProdutosParamsT = {
@@ -21,7 +21,7 @@ type AddProdutosParamsT = {
 const AddSales = ({ isActive, setIsActive, getSales }: AddProdutosParamsT) => {
 
     const { clientes } = useContext(ClienteContexto)
-    const { produtos } = useContext(ProdutoContexto)
+    const { produtos } = useContext(ProdutosContext)
 
 
     type addProdutosSchemaT = z.infer<typeof addProdutoSchema>
@@ -72,8 +72,8 @@ const AddSales = ({ isActive, setIsActive, getSales }: AddProdutosParamsT) => {
     }
 
     return (
-        <div className='absolute w-full h-full flex justify-center items-center bg-gray-500/20 z-10'>
-            <div className='bg-white w-2/5  rounded-2xl relative flex flex-col items-center p-4 '>
+        <div className='absolute w-full h-full flex justify-center bg-gray-500/20 z-10'>
+            <div className='bg-white w-[600px] h-[500px] m-32 rounded-2xl relative flex flex-col items-center p-4 '>
                 <h1 className='text-2xl mt-2 mb-2'>Adicionar vendas</h1>
                 <span className='absolute top-2 right-4 text-2xl cursor-pointer hover:scale-[1.25]' onClick={handleOnClickClose}>X</span>
                 <form className='flex flex-col justify-center w-2/5 gap-1' onSubmit={handleSubmit(handleAddSales)}>

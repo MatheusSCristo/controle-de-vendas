@@ -38,3 +38,13 @@ export type ClienteT = {
     codigo:string
 
   }
+
+  export type PedidosProdutosT={
+    nome:string,
+    quantidade:number,
+    ganhos:number,
+  }
+  export type ClintesTopT={
+    empresa:string,
+    compras:number,
+  }

@@ -1,30 +1,30 @@
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { ProdutoT } from "../types/types";
-export const ProdutoContexto = createContext<ProdutoContextoDataT>(
+export const ProdutosContext = createContext<ProdutoContextDataT>(
     {
         produtos: [] ,
         setProdutos: () => { }
     }
 )
 
-type ProdutoContextoDataT = {
+type ProdutoContextDataT = {
     produtos: ProdutoT[],
     setProdutos: React.Dispatch<React.SetStateAction<ProdutoT[]>>
 }
 
-function VendasProvider({ children }: { children: ReactNode }) {
+function ProdutoProvider({ children }: { children: ReactNode }) {
     const [produtos, setProdutos] = useState<ProdutoT[]>(() => {
         const localProdutos = localStorage.getItem('produtos');
-        return localProdutos ? JSON.parse(localProdutos) : [] 
-    })
+        return localProdutos ? JSON.parse(localProdutos) : []
+    }) 
     useEffect(()=>{
         localStorage.setItem('produtos',JSON.stringify(produtos))
     },[produtos])
     return (
-        <ProdutoContexto.Provider value={{ produtos, setProdutos }}>
+        <ProdutosContext.Provider value={{ produtos, setProdutos }}>
             {children}
-        </ProdutoContexto.Provider>
+        </ProdutosContext.Provider>
     )
 }
 
-export default VendasProvider
+export default ProdutoProvider
