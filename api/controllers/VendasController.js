@@ -14,18 +14,16 @@ export default {
     postVenda: async (req, res) => {
         let json = { error: '', result: {} }
         let produto = req.body.produto 
-        let codigo = req.body.codigo 
         let quantidade = req.body.quantidade 
         let precoDeVenda = req.body.precoDeVenda 
         let dataDaVenda = req.body.dataDaVenda 
         let cliente = req.body.cliente 
         let status = req.body.status 
-        if (produto && codigo && quantidade && precoDeVenda && dataDaVenda && cliente && status ) {
-            const id=await VendasService.postVenda(produto,codigo,quantidade,precoDeVenda,dataDaVenda,cliente,status)
+        if (produto && quantidade && precoDeVenda && dataDaVenda && cliente && status ) {
+            const codigo=await VendasService.postVenda(produto,quantidade,precoDeVenda,dataDaVenda,cliente,status)
             json.result = {
-                id,
-                produto,
                 codigo,
+                produto,
                 quantidade,
                 precoDeVenda,
                 dataDaVenda,
@@ -38,10 +36,25 @@ export default {
         }
         res.json(json)
     },
-    
+    updateVenda: async (req, res) => {
+        let json = { error: '', result: {} }
+        let codigo = req.params.codigo 
+        let status = req.body.status 
+        if (codigo && status) {
+            await VendasService.updateVenda(codigo,status)
+            json.result = {
+                codigo,
+                status
+            };
+        }
+        else {
+            json.error = 'Campos nao enviados'
+        }
+        res.json(json)
+    },
     deleteVenda: async (req, res) => {
         let json = { error: '', result: {} }
-        await VendasService.deleteVenda(req.params.id)
+        await VendasService.deleteVenda(req.params.codigo)
         res.json(json)
     }
 

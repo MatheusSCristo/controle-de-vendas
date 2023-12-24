@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AddClientes from './Components/AddClientes'
 import { ClienteT } from '../../types/types'
 import EditarClientes from './Components/EditarClientes'
+import { ClienteContexto } from '../../context/clienteContext'
 
 const Clientes = () => {
+  const {clientes:pessoas,setClientes:setPessoas}=useContext(ClienteContexto)
+  const [search, setSearch] = useState('')
   const [editCliente, setEditCliente] = useState({
     nome:"",
     sobrenome:"",
@@ -11,7 +14,6 @@ const Clientes = () => {
     localizacao:"",
     cpf:""
   })
-  const [search, setSearch] = useState('')
   const [isActive, setIsActive] = useState(
     {
       adicionar: false,
@@ -19,10 +21,26 @@ const Clientes = () => {
 
     })
   const [clientes, setClientes] = useState<ClienteT[]>([])
+
+  useEffect(() => {
+    if (localStorage.getItem('clientes'))
+      setClientes(() => {
+        const localClientes = localStorage.getItem('clientes');
+        return localClientes ? JSON.parse(localClientes) : []
+      })
+    else {
+      getClientes()
+    }
+  }, [])
+
+
   const getClientes = () => {
     fetch("http://localhost:3000/api/clientes")
       .then((res) => res.json())
-      .then((data) => setClientes(data.result))
+      .then((data) =>{ 
+        setClientes(data.result)
+        setPessoas(data.result)
+      })
       .catch((error) => console.log(error))
     return
   }
@@ -45,7 +63,7 @@ const Clientes = () => {
   }
 
   useEffect(() => {
-    getClientes()
+    setTimeout(()=>getClientes(),1000)
   }, [isActive])
 
   return (
@@ -70,6 +88,11 @@ const Clientes = () => {
             <th>Empresa</th>
             <th>CPF</th>
             <th>Localização</th>
+            <th>
+              <img src='src\assets\imgs\refresh.svg' className='w-12 cursor-pointer hover:scale-[1.15] mx-4'
+                onClick={getClientes}
+              />
+            </th>
           </tr>
           {clientes.map((cliente) => (
             (cliente.nome.toLocaleLowerCase().includes(search.toLocaleLowerCase())

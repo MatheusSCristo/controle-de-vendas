@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from "zod"
 import { ClienteT } from '../../../types/types'
+import { ClienteContexto } from '../../../context/clienteContext'
 
 type AddClientesParams = {
   isActive: {
@@ -15,7 +16,8 @@ type AddClientesParams = {
   }>>
 }
 
-const AddClientes = ({isActive, setIsActive }: AddClientesParams) => {
+const AddClientes = ({ isActive, setIsActive }: AddClientesParams) => {
+  const { clientes } = useContext(ClienteContexto)
 
   type addUserSchemaType = z.infer<typeof addUserSchema>
   const addUserSchema = z.object({
@@ -25,7 +27,15 @@ const AddClientes = ({isActive, setIsActive }: AddClientesParams) => {
     localizacao: z.string().min(1, "É preciso informar a cidade do cliente"),
     cpf: z.string().min(11, "CPF inválido").max(12, "CPF inválido").refine((val) => parseInt(val),
       "CPF inválido"
-    )
+    ).refine((val) => {
+      let exist=false
+      clientes.map((cliente) => {
+        if (cliente.cpf === val) {
+          exist= true
+        }
+      })
+      return !exist
+    }, "CPF do cliente já cadastrado no sistema")
   })
 
   const { register,

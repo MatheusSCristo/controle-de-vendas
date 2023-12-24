@@ -23,18 +23,14 @@ export default {
         let json = { error: '', result: {} }
         let produto = req.body.produto
         let validade = req.body.validade
-        let codigo = req.body.codigo
         let precoDeCompra = req.body.precoDeCompra
-        let precoDeVenda = req.body.precoDeVenda
         let dataDaCompra = req.body.dataDaCompra
-        if (produto && validade && codigo && precoDeCompra && precoDeVenda && dataDaCompra) {
-            await ProdutoService.postProduto(produto, validade, codigo, precoDeCompra, precoDeVenda, dataDaCompra)
+        if (produto && validade && precoDeCompra && dataDaCompra) {
+            await ProdutoService.postProduto(produto, validade, precoDeCompra, dataDaCompra)
             json.result = {
                 produto,
                 validade,
-                codigo,
                 precoDeCompra,
-                precoDeVenda,
                 dataDaCompra
             };
         }
@@ -45,21 +41,18 @@ export default {
     },
     updateProduto: async (req, res) => {
         let json = { error: '', result: {} }
-        let codigo = req.params.codigo 
-        let produto = req.body.produto 
-        let validade = req.body.validade 
-        let precoDeCompra = req.body.precoDeCompra 
-        let precoDeVenda = req.body.precoDeVenda 
-        let dataDaCompra = req.body.dataDaCompra 
-
-        if ((produto && validade && codigo && precoDeCompra && precoDeVenda && dataDaCompra) && codigo) {
-            await ProdutoService.updateProduto(produto, validade, codigo, precoDeCompra, precoDeVenda, dataDaCompra)
+        let produto = req.body.produto
+        let codigo=req.params.codigo
+        let validade = req.body.validade
+        let precoDeCompra = req.body.precoDeCompra
+        let dataDaCompra = req.body.dataDaCompra
+        if (produto && validade && precoDeCompra && dataDaCompra && codigo) {
+            await ProdutoService.updateProduto(produto, validade, precoDeCompra, dataDaCompra,codigo)
             json.result = {
+                codigo,
                 produto,
                 validade,
-                codigo,
                 precoDeCompra,
-                precoDeVenda,
                 dataDaCompra
             };
         }
