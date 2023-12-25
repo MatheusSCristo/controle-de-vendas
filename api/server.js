@@ -16,6 +16,6 @@ server.use('/api', clienteRoutes);
 server.use('/api', produtosRoutes);
 server.use('/api', vendasRoutes);
 
-server.listen(process.env.PORT, () => {
-    console.log('Servidor rodando em', process.env.PORT);
+server.listen(process.env.PORT , () => {
+    console.log('Servidor rodando em', process.env.DB_PORT);
 });
